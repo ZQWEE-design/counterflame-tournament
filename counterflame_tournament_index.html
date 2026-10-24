@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0d">
+<title>COUNTERFLAME TOURNAMENT — Season 1</title>
+<style>
+:root{--bg:#09090b;--panel:#131316;--panel2:#1b1b20;--red:#ed2029;--white:#f5f5f6;--muted:#a4a4ad;--line:#303036}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body:before{content:"COUNTERFLAME";position:fixed;z-index:-1;top:20%;left:-8%;font-size:clamp(70px,17vw,210px);font-weight:900;letter-spacing:-.08em;color:rgba(237,32,41,.045);white-space:nowrap;transform:rotate(-12deg);pointer-events:none}
+header{border-bottom:1px solid var(--line);background:rgba(9,9,11,.94);position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.logo{font-weight:1000;letter-spacing:.06em;font-size:18px}.logo span{color:var(--red)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{color:var(--white);text-decoration:none;font-size:13px;font-weight:800;padding:9px 11px;border-radius:5px}
+nav a:hover{background:var(--red)}
+main{max-width:1100px;margin:auto;padding:28px 20px 60px}
+.hero{min-height:300px;display:flex;align-items:center;border:1px solid var(--line);background:linear-gradient(105deg,#151518 0%,#101013 60%,#1d0b0d 100%);padding:clamp(24px,6vw,58px);position:relative;overflow:hidden}
+.hero:after{content:"CF";position:absolute;right:2%;bottom:-28%;font-size:clamp(180px,35vw,390px);font-weight:1000;color:rgba(237,32,41,.09);line-height:1;pointer-events:none}
+.kicker{color:var(--red);font-size:12px;letter-spacing:.2em;font-weight:900}
+h1{font-size:clamp(36px,7vw,72px);line-height:.96;margin:14px 0;text-transform:uppercase;font-weight:1000;letter-spacing:-.045em;max-width:700px}
+h1 span{color:var(--red)}.hero p{color:#c3c3ca;max-width:540px;line-height:1.6}
+.btn{display:inline-block;border:0;border-radius:4px;background:var(--red);color:white;font-weight:900;padding:13px 17px;cursor:pointer;text-decoration:none;text-transform:uppercase;font-size:12px}
+.btn:hover{background:#ff3b43}.btn.secondary{background:#25252b;border:1px solid #414149}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 32px}
+.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:7px}
+.stat{padding:17px}.stat strong{display:block;font-size:24px;color:var(--red);margin-bottom:5px}.stat small{color:var(--muted);text-transform:uppercase;font-weight:800;font-size:11px;letter-spacing:.08em}
+section{margin-top:34px;scroll-margin-top:86px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
+h2{margin:0;text-transform:uppercase;font-size:clamp(22px,4vw,32px);letter-spacing:-.03em}
+h2 span{color:var(--red)}.sub{color:var(--muted);font-size:13px;margin-top:7px}
+.panel{padding:20px}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:11px;text-transform:uppercase;font-weight:900;letter-spacing:.08em;color:#d6d6dc}
+input,select,textarea{width:100%;background:#09090b;border:1px solid #393940;border-radius:4px;color:white;padding:12px;font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--red)}
+.note{font-size:12px;color:var(--muted);line-height:1.5}
+.team-list,.matches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.team,.match{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px}
+.team{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.team-name{font-weight:900;text-transform:uppercase}.team-meta{font-size:12px;color:var(--muted);margin-top:5px}
+.tag{font-size:10px;color:#fff;background:#29292f;padding:5px 7px;border-radius:3px;font-weight:900;text-transform:uppercase}
+.match-top{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:800}
+.sides{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:15px;align-items:center}.sides strong{font-size:14px}.score{font-size:20px;font-weight:1000;color:var(--red)}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #393940;border-radius:6px;grid-column:1/-1}
+footer{border-top:1px solid var(--line);padding:24px 20px;text-align:center;color:var(--muted);font-size:12px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:650px){.nav{align-items:flex-start;flex-direction:column}.stats{grid-template-columns:1fr}.team-list,.matches,.admin-grid{grid-template-columns:1fr}form{grid-template-columns:1fr}.field.full{grid-column:auto}.hero{min-height:280px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="logo"><span>COUNTER</span>FLAME</div><nav><a href="#registration">РЕГИСТРАЦИЯ</a><a href="#teams">КОМАНДЫ</a><a href="#bracket">СЕТКА</a><a href="#admin">ОРГАНИЗАТОР</a></nav></div></header>
+<main>
+<div class="hero">
+  <div>
+    <div class="kicker">STANDOFF 2 • COMPETITIVE SERIES</div>
+    <h1>COUNTERFLAME<br><span>TOURNAMENT</span></h1>
+    <p>SEASON 1 — Время показать командную игру. Собери состав, зарегистрируй команду и докажи, кто достоин победы.</p>
+    <a class="btn" href="#registration">Зарегистрировать команду</a>
+  </div>
+</div>
+<div class="stats">
+  <div class="stat"><strong>SEASON 1</strong><small>Первый сезон</small></div>
+  <div class="stat"><strong>5 × 5</strong><small>Формат турнира</small></div>
+  <div class="stat"><strong>FREE</strong><small>Участие бесплатное</small></div>
+</div>
+
+<section id="registration">
+  <div class="section-head"><div><h2><span>01 /</span> Регистрация команды</h2><div class="sub">Заполни данные капитана и состав команды.</div></div></div>
+  <div class="panel">
+    <form id="regForm">
+      <div class="field"><label for="teamName">Название команды *</label><input id="teamName" required maxlength="32" placeholder="Например, CF Academy"></div>
+      <div class="field"><label for="captain">Капитан *</label><input id="captain" required maxlength="32" placeholder="Игровой ник"></div>
+      <div class="field"><label for="contact">Контакт для связи *</label><input id="contact" required maxlength="80" placeholder="Telegram / Discord"></div>
+      <div class="field"><label for="rank">Среднее звание команды</label><select id="rank"><option>Не указано</option><option>Серебро — Золото</option><option>Рейнджер — Чемпион</option><option>Мастер — Элитный мастер</option><option>Легенда — Мифический</option><option>Профессиональный уровень</option></select></div>
+      <div class="field full"><label for="roster">Состав команды</label><textarea id="roster" rows="3" maxlength="400" placeholder="Ники игроков через запятую (до 5 основных игроков)"></textarea></div>
+      <div class="field full"><button class="btn" type="submit">Отправить заявку</button><div class="note">Демо-версия: заявки сохраняются только в этом браузере на этом устройстве. Для настоящей общей регистрации понадобится сервер или база данных.</div></div>
+    </form>
+  </div>
+</section>
+
+<section id="teams">
+  <div class="section-head"><div><h2><span>02 /</span> Участники</h2><div class="sub">Команды, зарегистрированные в этом браузере.</div></div><button class="btn secondary" id="refreshTeams" type="button">Обновить</button></div>
+  <div class="team-list" id="teamList"><div class="empty">Пока нет зарегистрированных команд.</div></div>
+</section>
+
+<section id="bracket">
+  <div class="section-head"><div><h2><span>03 /</span> Турнирная сетка</h2><div class="sub">Добавляй результаты в панели организатора.</div></div></div>
+  <div class="matches" id="matchList"><div class="empty">Результаты матчей пока не добавлены.</div></div>
+</section>
+
+<section id="admin">
+  <div class="section-head"><div><h2><span>04 /</span> Панель организатора</h2><div class="sub">Локальное управление демо-сайтом.</div></div></div>
+  <div class="panel">
+    <div class="note" style="margin-bottom:15px">Внимание: эта демо-панель не защищена серверной авторизацией. Не используй её для приватных данных или официальных результатов в открытом доступе.</div>
+    <div class="admin-grid">
+      <div class="field"><label for="matchTeams">Матч</label><input id="matchTeams" placeholder="Команда A — Команда B"></div>
+      <div class="field"><label for="matchScore">Счёт</label><input id="matchScore" placeholder="13 : 8"></div>
+      <div class="field full"><button class="btn" id="addMatch" type="button">Добавить результат</button></div>
+      <div class="field full"><button class="btn secondary" id="clearData" type="button">Очистить локальные данные</button></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer>© COUNTERFLAME TOURNAMENT • SEASON 1<br>Unofficial community tournament website for Standoff 2.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}};
+const write=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+function renderTeams(){
+ const teams=read('cf_teams'),list=$('teamList');
+ if(!teams.length){list.innerHTML='<div class="empty">Пока нет зарегистрированных команд.</div>';return}
+ list.innerHTML=teams.map(t=>`<article class="team"><div><div class="team-name">${escapeHtml(t.name)}</div><div class="team-meta">Капитан: ${escapeHtml(t.captain)} · ${escapeHtml(t.rank)}</div><div class="team-meta">${escapeHtml(t.contact)}</div></div><span class="tag">Заявка</span></article>`).join('');
+}
+function renderMatches(){
+ const matches=read('cf_matches'),list=$('matchList');
+ if(!matches.length){list.innerHTML='<div class="empty">Результаты матчей пока не добавлены.</div>';return}
+ list.innerHTML=matches.map((m,i)=>`<article class="match"><div class="match-top"><span>Матч ${i+1}</span><span>Завершён</span></div><div class="sides"><strong>${escapeHtml(m.teams)}</strong><span class="score">${escapeHtml(m.score)}</span></div></article>`).join('');
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('regForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const teams=read('cf_teams');
+ const name=$('teamName').value.trim();
+ if(teams.some(t=>t.name.toLowerCase()===name.toLowerCase())){alert('Команда с таким названием уже зарегистрирована в этом браузере.');return}
+ teams.push({name,captain:$('captain').value.trim(),contact:$('contact').value.trim(),rank:$('rank').value,roster:$('roster').value.trim(),created:new Date().toISOString()});
+ write('cf_teams',teams);e.target.reset();renderTeams();alert('Заявка сохранена в этом браузере!');
+});
+$('refreshTeams').addEventListener('click',renderTeams);
+$('addMatch').addEventListener('click',()=>{
+ const teams=$('matchTeams').value.trim(),score=$('matchScore').value.trim();
+ if(!teams||!score){alert('Заполни поля «Матч» и «Счёт».');return}
+ const matches=read('cf_matches');matches.push({teams,score});write('cf_matches',matches);
+ $('matchTeams').value='';$('matchScore').value='';renderMatches();
+});
+$('clearData').addEventListener('click',()=>{
+ if(confirm('Удалить все заявки и результаты, сохранённые в этом браузере?')){localStorage.removeItem('cf_teams');localStorage.removeItem('cf_matches');renderTeams();renderMatches();}
+});
+renderTeams();renderMatches();
+</script>
+</body>
+</html>
